@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_test/views/map_view.dart';
 
 void main() {
   runApp(const GoogleMapsTest());
@@ -10,11 +11,9 @@ class GoogleMapsTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Google Maps',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Google Maps')),
-        body: const Center(child: Text('Google Maps will be displayed here.')),
-      ),
+      home: Scaffold(body: MapView()),
     );
   }
 }
