@@ -16,20 +16,24 @@ class _MapViewState extends State<MapView> {
   @override
   void initState() {
     initialCameraPosition = CameraPosition(
-      zoom: 5,
-      target: LatLng(30.0444, 31.2357),
+      zoom: 11,
+      target: LatLng(31.2156, 29.9553),
     );
     initMarkers();
+    initPolyLines();
     super.initState();
   }
 
   late GoogleMapController mapController;
   Set<Marker> markers = {};
+  Set<Polyline> polylines = {};
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GoogleMap(
+          zoomControlsEnabled: false,
+          polylines: polylines,
           markers: markers,
           onMapCreated: (GoogleMapController controller) {
             mapController = controller;
@@ -78,30 +82,35 @@ class _MapViewState extends State<MapView> {
     mapController.setMapStyle(nightMap);
   }
 
+  // use this method if you get marker form api and its size not correct
+  // but if you have access to image adjust its size by any toll and not use this method as it takes time
   Future<Uint8List> getIconBytes(String image, int width) async {
+    //load image as bytes
     var imageData = await rootBundle.load(image);
-
+    //convet it to Uint8List to change width
     var codecImage = await ui.instantiateImageCodec(
       imageData.buffer.asUint8List(),
       targetWidth: width,
     );
+    // get image frame
     var imageFrame = await codecImage.getNextFrame();
+    // adjust imge format to png
     var imgeByteDate = await imageFrame.image.toByteData(
       format: ui.ImageByteFormat.png,
     );
-
+    // return image as Uint8List
     return imgeByteDate!.buffer.asUint8List();
   }
 
   void initMarkers() async {
-    var icon = BitmapDescriptor.bytes(
-      await getIconBytes('assets/images/marker.png', 50),
-    );
-
-    // var icon = await BitmapDescriptor.asset(
-    //   ImageConfiguration(),
-    //   'assets/images/marker.png',
+    // var icon = BitmapDescriptor.bytes(
+    //   await getIconBytes('assets/images/marker.png', 20),
     // );
+
+    var icon = await BitmapDescriptor.asset(
+      ImageConfiguration(),
+      'assets/images/marker.png',
+    );
     var marker = places.map(
       (place) => Marker(
         icon: icon,
@@ -112,5 +121,33 @@ class _MapViewState extends State<MapView> {
     );
     markers.addAll(marker);
     setState(() {});
+  }
+
+  void initPolyLines() {
+    Polyline polyLine = Polyline(
+      color: Colors.amber,
+      endCap: Cap.roundCap,
+      zIndex: 1,
+      width: 3,
+      polylineId: PolylineId('1'),
+      points: [
+        LatLng(31.25320304319797, 29.983311819285383),
+        LatLng(31.18976038445989, 30.010545093514246),
+        LatLng(31.18132492732671, 29.909594163183122),
+      ],
+    );
+    Polyline polyLine1 = Polyline(
+      geodesic: true,
+      color: Colors.black,
+      endCap: Cap.roundCap,
+      width: 4,
+      polylineId: PolylineId('2'),
+      points: [
+        LatLng(31.14596817199962, 30.01571002483351),
+        LatLng(31.21144810768513, 29.92837573161682),
+      ],
+    );
+    polylines.add(polyLine1);
+    polylines.add(polyLine);
   }
 }
