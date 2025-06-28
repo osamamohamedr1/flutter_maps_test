@@ -22,6 +22,7 @@ class _MapViewState extends State<MapView> {
     initMarkers();
     initPolyLines();
     initPolygons();
+    initCircles();
     super.initState();
   }
 
@@ -29,15 +30,17 @@ class _MapViewState extends State<MapView> {
   Set<Marker> markers = {};
   Set<Polyline> polylines = {};
   Set<Polygon> polygons = {};
+  Set<Circle> circles = {};
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GoogleMap(
+          circles: circles,
           zoomControlsEnabled: false,
-          polygons: polygons,
-          polylines: polylines,
-          markers: markers,
+          // polygons: polygons,
+          // polylines: polylines,
+          // markers: markers,
           onMapCreated: (GoogleMapController controller) {
             mapController = controller;
             intitalizeMapStyle();
@@ -172,5 +175,16 @@ class _MapViewState extends State<MapView> {
       ],
     );
     polygons.add(polygon);
+  }
+
+  void initCircles() {
+    var cairoCircle = Circle(
+      strokeWidth: 2,
+      fillColor: Colors.black26,
+      radius: 5000,
+      circleId: CircleId('1'),
+      center: LatLng(31.2156, 29.9553),
+    );
+    circles.add(cairoCircle);
   }
 }
