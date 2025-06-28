@@ -21,18 +21,21 @@ class _MapViewState extends State<MapView> {
     );
     initMarkers();
     initPolyLines();
+    initPolygons();
     super.initState();
   }
 
   late GoogleMapController mapController;
   Set<Marker> markers = {};
   Set<Polyline> polylines = {};
+  Set<Polygon> polygons = {};
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GoogleMap(
           zoomControlsEnabled: false,
+          polygons: polygons,
           polylines: polylines,
           markers: markers,
           onMapCreated: (GoogleMapController controller) {
@@ -149,5 +152,25 @@ class _MapViewState extends State<MapView> {
     );
     polylines.add(polyLine1);
     polylines.add(polyLine);
+  }
+
+  void initPolygons() {
+    Polygon polygon = Polygon(
+      holes: [
+        [
+          // dimensions of hole that must be located inside the polygun
+        ],
+      ],
+      polygonId: PolygonId('1'),
+      fillColor: Colors.black45,
+      strokeWidth: 2,
+      points: [
+        LatLng(31.211028556866843, 29.881688732172954),
+        LatLng(31.264556296232755, 29.994479240614535),
+        LatLng(31.264556296232755, 29.994479240614535),
+        LatLng(31.224302724748142, 29.997066178881546),
+      ],
+    );
+    polygons.add(polygon);
   }
 }
