@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_test/models/place_model.dart';
 
 class MapView extends StatefulWidget {
   const MapView({super.key});
@@ -13,8 +14,8 @@ class _MapViewState extends State<MapView> {
   @override
   void initState() {
     initialCameraPosition = CameraPosition(
-      zoom: 10,
-      target: LatLng(31.254757038716278, 31.543353972025066),
+      zoom: 5,
+      target: LatLng(30.0444, 31.2357),
     );
     initMarkers();
     super.initState();
@@ -76,10 +77,12 @@ class _MapViewState extends State<MapView> {
   }
 
   void initMarkers() {
-    var myMarker = Marker(
-      markerId: MarkerId('1'),
-      position: LatLng(31.254757038716278, 31.543353972025066),
+    var marker = places.map(
+      (place) => Marker(
+        markerId: MarkerId(place.id.toString()),
+        position: place.latLng,
+      ),
     );
-    markers.add(myMarker);
+    markers.addAll(marker);
   }
 }
