@@ -33,5 +33,16 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
         // show error
       }
     }
+    checkAndRequestLocationPermission();
+  }
+
+  checkAndRequestLocationPermission() async {
+    var permissionStatus = await location.hasPermission();
+    if (permissionStatus == PermissionStatus.denied) {
+      var isGarnted = await location.requestPermission();
+      if (isGarnted != PermissionStatus.granted) {
+        //show error
+      }
+    }
   }
 }
