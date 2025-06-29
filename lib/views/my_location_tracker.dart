@@ -10,21 +10,37 @@ class MyLocationTracker extends StatefulWidget {
 }
 
 class _MyLocationTrackerState extends State<MyLocationTracker> {
+  late GoogleMapController googleMapController;
   late final CameraPosition initialCameraPosition;
   late final Location location;
   @override
   void initState() {
     initialCameraPosition = CameraPosition(target: LatLng(30.0444, 31.2357));
     location = Location();
-    checkAndRequestLocationService();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(initialCameraPosition: initialCameraPosition);
+    return GoogleMap(
+      onMapCreated: (controller) {
+        googleMapController = controller;
+        intitalizeMapStyle();
+      },
+      initialCameraPosition: initialCameraPosition,
+    );
   }
 
+  //change map style call it after map created
+  intitalizeMapStyle() async {
+    var nightMap = await DefaultAssetBundle.of(
+      context,
+    ).loadString('assets/map_styles/night_map_style.json');
+
+    googleMapController.setMapStyle(nightMap);
+  }
+
+  //check if location enabled
   void checkAndRequestLocationService() async {
     var isEnabled = await location.serviceEnabled();
     if (!isEnabled) {
@@ -33,9 +49,9 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
         // show error
       }
     }
-    checkAndRequestLocationPermission();
   }
 
+  //check permission
   checkAndRequestLocationPermission() async {
     var permissionStatus = await location.hasPermission();
     if (permissionStatus == PermissionStatus.denied) {
@@ -44,5 +60,10 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
         //show error
       }
     }
+  }
+
+  // streem for user location to track
+  void getLocation() {
+    location.onLocationChanged.listen((location) {});
   }
 }
