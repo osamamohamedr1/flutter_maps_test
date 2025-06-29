@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_test/views/map_view.dart';
+import 'package:google_maps_test/views/my_location_tracker.dart';
 
 void main() {
   runApp(const GoogleMapsTest());
@@ -13,7 +13,7 @@ class GoogleMapsTest extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Google Maps',
-      home: Scaffold(body: MapView()),
+      home: Scaffold(body: MyLocationTracker()),
     );
   }
 }

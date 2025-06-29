@@ -4,14 +4,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_test/models/place_model.dart';
 import 'dart:ui' as ui;
 
-class MapView extends StatefulWidget {
-  const MapView({super.key});
+class MapBasicsView extends StatefulWidget {
+  const MapBasicsView({super.key});
 
   @override
-  State<MapView> createState() => _MapViewState();
+  State<MapBasicsView> createState() => _MapBasicsViewState();
 }
 
-class _MapViewState extends State<MapView> {
+class _MapBasicsViewState extends State<MapBasicsView> {
   late CameraPosition initialCameraPosition;
   @override
   void initState() {
