@@ -41,7 +41,7 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
   }
 
   //check if location enabled
-  void checkAndRequestLocationService() async {
+  Future<void> checkAndRequestLocationService() async {
     var isEnabled = await location.serviceEnabled();
     if (!isEnabled) {
       var isEnabled = await location.requestService();
@@ -52,18 +52,32 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
   }
 
   //check permission
-  checkAndRequestLocationPermission() async {
+  Future<bool> checkAndRequestLocationPermission() async {
     var permissionStatus = await location.hasPermission();
+    if (permissionStatus == PermissionStatus.deniedForever) {
+      return false;
+    }
     if (permissionStatus == PermissionStatus.denied) {
       var isGarnted = await location.requestPermission();
       if (isGarnted != PermissionStatus.granted) {
         //show error
+        return false;
       }
     }
+
+    return true;
   }
 
   // streem for user location to track
   void getLocation() {
     location.onLocationChanged.listen((location) {});
+  }
+
+  void updateMyLocation() async {
+    await checkAndRequestLocationService();
+    var hasPemission = await checkAndRequestLocationPermission();
+    if (hasPemission) {
+      getLocation();
+    } else {}
   }
 }
