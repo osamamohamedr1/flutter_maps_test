@@ -10,13 +10,14 @@ class MyLocationTracker extends StatefulWidget {
 }
 
 class _MyLocationTrackerState extends State<MyLocationTracker> {
-  late GoogleMapController googleMapController;
+  GoogleMapController? googleMapController;
   late final CameraPosition initialCameraPosition;
   late final Location location;
   @override
   void initState() {
     initialCameraPosition = CameraPosition(target: LatLng(30.0444, 31.2357));
     location = Location();
+    updateMyLocation();
     super.initState();
   }
 
@@ -37,7 +38,7 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
       context,
     ).loadString('assets/map_styles/night_map_style.json');
 
-    googleMapController.setMapStyle(nightMap);
+    googleMapController!.setMapStyle(nightMap);
   }
 
   //check if location enabled
@@ -70,7 +71,16 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
 
   // streem for user location to track
   void getLocation() {
-    location.onLocationChanged.listen((location) {});
+    location.onLocationChanged.listen((location) {
+      googleMapController?.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            zoom: 15,
+            target: LatLng(location.latitude!, location.longitude!),
+          ),
+        ),
+      );
+    });
   }
 
   void updateMyLocation() async {
