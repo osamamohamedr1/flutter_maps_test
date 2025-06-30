@@ -49,15 +49,7 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
   }
 
   void updateMyLocation() async {
-    await locationService.checkAndRequestLocationService();
-    var hasPemission =
-        await locationService.checkAndRequestLocationPermission();
-    if (hasPemission) {
-      locationService.getLiveLocation((location) {
-        setMyLocationMarker(location);
-        updateMyCamera(location);
-      });
-    } else {}
+    locationService.getLocation();
   }
 
   void updateMyCamera(LocationData location) {

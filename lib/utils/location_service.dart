@@ -3,32 +3,45 @@ import 'package:location/location.dart';
 class LocationService {
   Location location = Location();
   //check if location enabled
-  Future<bool> checkAndRequestLocationService() async {
+  Future<void> checkAndRequestLocationService() async {
     var isEnabled = await location.serviceEnabled();
     if (!isEnabled) {
       var isEnabled = await location.requestService();
-      return isEnabled ? true : false;
+      if (!isEnabled) {
+        throw LocationServiceException();
+      }
     }
-    return true;
   }
 
   //check permission
-  Future<bool> checkAndRequestLocationPermission() async {
+  Future<void> checkAndRequestLocationPermission() async {
     var permissionStatus = await location.hasPermission();
     if (permissionStatus == PermissionStatus.deniedForever) {
-      return false;
+      throw LocationPermissionException();
     }
     if (permissionStatus == PermissionStatus.denied) {
       var isGarnted = await location.requestPermission();
-      return isGarnted == PermissionStatus.granted;
+      if (isGarnted != PermissionStatus.granted) {
+        throw LocationPermissionException();
+      }
     }
-
-    return true;
   }
 
   //
   Future<void> getLiveLocation(void Function(LocationData)? onData) async {
     location.changeSettings(distanceFilter: 2);
+    await checkAndRequestLocationService();
+    await checkAndRequestLocationPermission();
     location.onLocationChanged.listen(onData);
   }
+
+  Future<LocationData> getLocation() async {
+    await checkAndRequestLocationService();
+    await checkAndRequestLocationPermission();
+    return await location.getLocation();
+  }
 }
+
+class LocationServiceException implements Exception {}
+
+class LocationPermissionException implements Exception {}
