@@ -13,6 +13,7 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
   GoogleMapController? googleMapController;
   late final CameraPosition initialCameraPosition;
   late final Location location;
+  Set<Marker> markers = {};
   @override
   void initState() {
     initialCameraPosition = CameraPosition(target: LatLng(30.0444, 31.2357));
@@ -24,6 +25,7 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
+      markers: markers,
       onMapCreated: (controller) {
         googleMapController = controller;
         intitalizeMapStyle();
@@ -72,6 +74,10 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
   // streem for user location to track
   void getLocation() {
     location.onLocationChanged.listen((location) {
+      var myLocationMarker = Marker(
+        markerId: MarkerId('myLocationMarker'),
+        position: LatLng(location.latitude!, location.longitude!),
+      );
       googleMapController?.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
@@ -80,6 +86,8 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
           ),
         ),
       );
+      markers.add(myLocationMarker);
+      setState(() {});
     });
   }
 
