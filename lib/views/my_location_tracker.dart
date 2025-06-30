@@ -73,18 +73,20 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
 
   // streem for user location to track
   void getLocation() {
+    location.changeSettings(distanceFilter: 2);
     location.onLocationChanged.listen((location) {
       var myLocationMarker = Marker(
         markerId: MarkerId('myLocationMarker'),
         position: LatLng(location.latitude!, location.longitude!),
       );
+
+      var cameraPosition = CameraPosition(
+        zoom: 15,
+        target: LatLng(location.latitude!, location.longitude!),
+      );
+
       googleMapController?.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            zoom: 15,
-            target: LatLng(location.latitude!, location.longitude!),
-          ),
-        ),
+        CameraUpdate.newCameraPosition(cameraPosition),
       );
       markers.add(myLocationMarker);
       setState(() {});
