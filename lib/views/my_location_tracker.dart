@@ -14,10 +14,14 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
   GoogleMapController? googleMapController;
   late final CameraPosition initialCameraPosition;
   late LocationService locationService;
+  bool isFrisCall = false;
   Set<Marker> markers = {};
   @override
   void initState() {
-    initialCameraPosition = CameraPosition(target: LatLng(30.0444, 31.2357));
+    initialCameraPosition = CameraPosition(
+      target: LatLng(30.0444, 31.2357),
+      zoom: 1,
+    );
     locationService = LocationService();
     updateMyLocation();
     super.initState();
@@ -51,20 +55,27 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
     if (hasPemission) {
       locationService.getLiveLocation((location) {
         setMyLocationMarker(location);
-        setCameraPosition(location);
+        updateMyCamera(location);
       });
     } else {}
   }
 
-  void setCameraPosition(LocationData location) {
-    var cameraPosition = CameraPosition(
-      zoom: 15,
-      target: LatLng(location.latitude!, location.longitude!),
-    );
+  void updateMyCamera(LocationData location) {
+    if (isFrisCall) {
+      var cameraPosition = CameraPosition(
+        zoom: 15,
+        target: LatLng(location.latitude!, location.longitude!),
+      );
 
-    googleMapController?.animateCamera(
-      CameraUpdate.newCameraPosition(cameraPosition),
-    );
+      googleMapController?.animateCamera(
+        CameraUpdate.newCameraPosition(cameraPosition),
+      );
+      isFrisCall = false;
+    } else {
+      googleMapController?.animateCamera(
+        CameraUpdate.newLatLng(LatLng(location.latitude!, location.longitude!)),
+      );
+    }
   }
 
   void setMyLocationMarker(LocationData location) {
