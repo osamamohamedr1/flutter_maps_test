@@ -1,0 +1,73 @@
+{
+  "predictions": [
+    {
+      "description": "Cairo, Egypt",
+      "matched_substrings": [
+        {
+          "length": 5,
+          "offset": 0
+        }
+      ],
+      "place_id": "ChIJcU-mY9c_WBQR0-0lbdzq4dM",
+      "reference": "ChIJcU-mY9c_WBQR0-0lbdzq4dM",
+      "structured_formatting": {
+        "main_text": "Cairo",
+        "main_text_matched_substrings": [
+          {
+            "length": 5,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Egypt"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Cairo"
+        },
+        {
+          "offset": 7,
+          "value": "Egypt"
+        }
+      ],
+      "types": ["locality", "political", "geocode"]
+    },
+    {
+      "description": "Cairo Festival City, New Cairo 1, Egypt",
+      "matched_substrings": [
+        {
+          "length": 5,
+          "offset": 0
+        }
+      ],
+      "place_id": "ChIJ8XWtoERAWBQRybA5MZ9Hqvo",
+      "reference": "ChIJ8XWtoERAWBQRybA5MZ9Hqvo",
+      "structured_formatting": {
+        "main_text": "Cairo Festival City",
+        "main_text_matched_substrings": [
+          {
+            "length": 5,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "New Cairo 1, Egypt"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Cairo Festival City"
+        },
+        {
+          "offset": 22,
+          "value": "New Cairo 1"
+        },
+        {
+          "offset": 36,
+          "value": "Egypt"
+        }
+      ],
+      "types": ["premise", "geocode"]
+    }
+  ],
+  "status": "OK"
+}

@@ -53,6 +53,7 @@ flutter:
   assets:
     - assets/map_styles/night_map_style.json
     - assets/images/marker.png
+    - assets/predictions_json.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
