@@ -12,7 +12,8 @@ class RouteTrackingView extends StatefulWidget {
 class _RouteTrackingViewState extends State<RouteTrackingView> {
   late CameraPosition initialCameraPosition;
   late LocationService locationService;
-  GoogleMapController? googleMapController;
+  late GoogleMapController googleMapController;
+  Set<Marker> markers = {};
   @override
   void initState() {
     initialCameraPosition = CameraPosition(target: LatLng(0, 0));
@@ -24,38 +25,34 @@ class _RouteTrackingViewState extends State<RouteTrackingView> {
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
+      markers: markers,
       onMapCreated: (controller) {
         googleMapController = controller;
+        updateMyLocation();
       },
       initialCameraPosition: initialCameraPosition,
     );
   }
 
   void updateMyLocation() async {
-    locationService.getLiveLocation((location) {
-      googleMapController?.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            zoom: 10,
-            target: LatLng(location.altitude!, location.longitude!),
-          ),
-        ),
+    var locationData = await locationService.getLocation();
+
+    try {
+      var myLocaton = LatLng(locationData.latitude!, locationData.longitude!);
+      var cameraPosition = CameraPosition(target: myLocaton, zoom: 10);
+      var myMarker = Marker(
+        markerId: MarkerId('My location'),
+        position: myLocaton,
       );
-    });
-    // await locationService.checkAndRequestLocationService();
-    // var hasPermission =
-    //     await locationService.checkAndRequestLocationPermission();
-    // if (hasPermission) {
-    //   locationService.getLiveLocation((location) {
-    //     googleMapController?.animateCamera(
-    //       CameraUpdate.newCameraPosition(
-    //         CameraPosition(
-    //           zoom: 10,
-    //           target: LatLng(location.altitude!, location.longitude!),
-    //         ),
-    //       ),
-    //     );
-    //   });
-    // }
+      markers.add(myMarker);
+      setState(() {});
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(cameraPosition),
+      );
+    } on LocationPermissionException catch (e) {
+      // TODO
+    } on LocationServiceException catch (e) {
+      // TODO
+    }
   }
 }

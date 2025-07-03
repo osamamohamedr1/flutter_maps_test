@@ -14,7 +14,7 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
   GoogleMapController? googleMapController;
   late final CameraPosition initialCameraPosition;
   late LocationService locationService;
-  bool isFrisCall = false;
+  bool isFristCall = true;
   Set<Marker> markers = {};
   @override
   void initState() {
@@ -23,7 +23,6 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
       zoom: 1,
     );
     locationService = LocationService();
-    updateMyLocation();
     super.initState();
   }
 
@@ -33,6 +32,8 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
       markers: markers,
       onMapCreated: (controller) {
         googleMapController = controller;
+        updateMyLocation();
+
         intitalizeMapStyle();
       },
       initialCameraPosition: initialCameraPosition,
@@ -49,20 +50,23 @@ class _MyLocationTrackerState extends State<MyLocationTracker> {
   }
 
   void updateMyLocation() async {
-    locationService.getLocation();
+    locationService.getLiveLocation((location) {
+      updateMyCamera(location);
+      setMyLocationMarker(location);
+      setState(() {});
+    });
   }
 
   void updateMyCamera(LocationData location) {
-    if (isFrisCall) {
+    if (isFristCall) {
       var cameraPosition = CameraPosition(
-        zoom: 15,
+        zoom: 20,
         target: LatLng(location.latitude!, location.longitude!),
       );
-
       googleMapController?.animateCamera(
         CameraUpdate.newCameraPosition(cameraPosition),
       );
-      isFrisCall = false;
+      isFristCall = false;
     } else {
       googleMapController?.animateCamera(
         CameraUpdate.newLatLng(LatLng(location.latitude!, location.longitude!)),
