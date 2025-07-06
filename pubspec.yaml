@@ -34,6 +34,7 @@ dependencies:
   google_maps_flutter: ^2.12.3
   http: ^1.4.0
   location: ^8.0.1
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -54,6 +55,7 @@ flutter:
     - assets/map_styles/night_map_style.json
     - assets/images/marker.png
     - assets/predictions_json.json
+    - assets/place_details_json.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see

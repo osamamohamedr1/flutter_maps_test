@@ -1,0 +1,76 @@
+{
+  "address_components": [
+    {
+      "long_name": "1600",
+      "short_name": "1600",
+      "types": ["street_number"]
+    },
+    {
+      "long_name": "Amphitheatre Parkway",
+      "short_name": "Amphitheatre Pkwy",
+      "types": ["route"]
+    },
+    {
+      "long_name": "Mountain View",
+      "short_name": "Mountain View",
+      "types": ["locality", "political"]
+    },
+    {
+      "long_name": "Santa Clara County",
+      "short_name": "Santa Clara County",
+      "types": ["administrative_area_level_2", "political"]
+    },
+    {
+      "long_name": "California",
+      "short_name": "CA",
+      "types": ["administrative_area_level_1", "political"]
+    },
+    {
+      "long_name": "United States",
+      "short_name": "US",
+      "types": ["country", "political"]
+    },
+    {
+      "long_name": "94043",
+      "short_name": "94043",
+      "types": ["postal_code"]
+    }
+  ],
+  "adr_address": "<span class=\"street-address\">1600 Amphitheatre Pkwy</span>, <span class=\"locality\">Mountain View</span>, <span class=\"region\">CA</span> <span class=\"postal-code\">94043</span>, <span class=\"country-name\">USA</span>",
+  "formatted_address": "1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
+  "geometry": {
+    "location": {
+      "lat": 37.4224764,
+      "lng": -122.0842499
+    },
+    "location_type": "ROOFTOP",
+    "viewport": {
+      "northeast": {
+        "lat": 37.4238253802915,
+        "lng": -122.0829009197085
+      },
+      "southwest": {
+        "lat": 37.4211274197085,
+        "lng": -122.0855988802915
+      }
+    }
+  },
+  "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/geocode-71.png",
+  "icon_background_color": "#7B9EB0",
+  "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
+  "name": "Googleplex",
+  "photos": [
+    {
+      "height": 3024,
+      "html_attributions": ["<a href=\"https://maps.google.com/maps/contrib/1234567890\">John Doe</a>"],
+      "photo_reference": "CmRaAAA...",
+      "width": 4032
+    }
+  ],
+  "place_id": "ChIJ2eUgeAK6j4ARbn5u_wAGqWA",
+  "reference": "ChIJ2eUgeAK6j4ARbn5u_wAGqWA",
+  "types": ["street_address"],
+  "url": "https://maps.google.com/?q=1600+Amphitheatre+Parkway,+Mountain+View,+CA+94043",
+  "utc_offset": -420,
+  "vicinity": "Mountain View"
+}

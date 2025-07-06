@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/services.dart';
 import 'package:google_maps_test/models/place_autocomplete_model/place_autocomplete_model.dart';
+import 'package:google_maps_test/models/place_details_model/place_details_model.dart';
 // import 'package:http/http.dart' as http;
 
 class PlacesService {
@@ -26,7 +25,6 @@ class PlacesService {
     for (var element in jsonData['predictions']) {
       places.add(PlaceModel.fromJson(element));
     }
-    log(places.toString());
     return places;
 
     // if (response.statusCode == 200) {
@@ -41,15 +39,23 @@ class PlacesService {
     // }
   }
 
-  // Future<PlaceDetailsModel> getPlaceDetails({required String placeId}) async {
-  //   var response = await http
-  //       .get(Uri.parse('$baseUrl/details/json?key=$apiKey&place_id=$placeId'));
+  Future<PlaceDetailsModel> getPlaceDetails({required String placeId}) async {
+    // var response = await http.get(
+    //   Uri.parse('$baseUrl/details/json?key=$apiKey&place_id=$placeId'),
+    // );
 
-  //   if (response.statusCode == 200) {
-  //     var data = jsonDecode(response.body)['result'];
-  //     return PlaceDetailsModel.fromJson(data);
-  //   } else {
-  //     throw Exception();
-  //   }
-  // }
+    final String jsonFile = await rootBundle.loadString(
+      'assets/place_details_json.json',
+    );
+    var result = jsonDecode(jsonFile);
+
+    return PlaceDetailsModel.fromJson(result);
+
+    // if (response.statusCode == 200) {
+    //   var data = jsonDecode(response.body)['result'];
+    //   return PlaceDetailsModel.fromJson(data);
+    // } else {
+    //   throw Exception();
+    // }
+  }
 }

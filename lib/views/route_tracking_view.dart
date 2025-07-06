@@ -6,6 +6,7 @@ import 'package:google_maps_test/utils/google_maps_place_service.dart';
 import 'package:google_maps_test/utils/location_service.dart';
 import 'package:google_maps_test/widgets/custom_text_field.dart';
 import 'package:google_maps_test/widgets/predections_list_view.dart';
+import 'package:uuid/uuid.dart';
 
 class RouteTrackingView extends StatefulWidget {
   const RouteTrackingView({super.key});
@@ -22,8 +23,11 @@ class _RouteTrackingViewState extends State<RouteTrackingView> {
   late TextEditingController textEditingController;
   Set<Marker> markers = {};
   List<PlaceModel> places = [];
+  String? sessionToken;
+  late Uuid uuid;
   @override
   void initState() {
+    uuid = Uuid();
     textEditingController = TextEditingController();
     initialCameraPosition = CameraPosition(target: LatLng(0, 0));
     locationService = LocationService();
@@ -35,14 +39,15 @@ class _RouteTrackingViewState extends State<RouteTrackingView> {
 
   void fetchPredictions() {
     textEditingController.addListener(() async {
+      sessionToken ??= uuid.v4();
+      log(sessionToken.toString());
       if (textEditingController.text.isNotEmpty) {
         log(textEditingController.text);
         var result = await placesService.getPredictions(
           input: textEditingController.text,
           sesstionToken: 'sesstionToken',
         );
-        log(textEditingController.text);
-        log(places.length.toString());
+
         places.clear();
         places.addAll(result);
         setState(() {});
@@ -74,7 +79,17 @@ class _RouteTrackingViewState extends State<RouteTrackingView> {
             children: [
               CustomTextField(textEditingController: textEditingController),
 
-              PredictionsListView(places: places),
+              PredictionsListView(
+                places: places,
+                placesService: placesService,
+                onplaceSelected: (placeDetailsModel) {
+                  textEditingController.clear();
+                  places.clear();
+                  setState(() {});
+                  log(placeDetailsModel.geometry!.location!.lat.toString());
+                  sessionToken = null;
+                },
+              ),
             ],
           ),
         ),
