@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,10 +21,7 @@ class _MapBasicsViewState extends State<MapBasicsView> {
       zoom: 11,
       target: LatLng(31.2156, 29.9553),
     );
-    initMarkers();
-    initPolyLines();
-    initPolygons();
-    initCircles();
+
     super.initState();
   }
 
@@ -42,8 +41,13 @@ class _MapBasicsViewState extends State<MapBasicsView> {
           // polylines: polylines,
           // markers: markers,
           onMapCreated: (GoogleMapController controller) {
+            log('Map created');
             mapController = controller;
-            intitalizeMapStyle();
+            initMarkers();
+            initPolyLines();
+            initPolygons();
+            initCircles();
+            // intitalizeMapStyle();
           },
           // cameraTargetBounds: CameraTargetBounds(
           //   LatLngBounds(

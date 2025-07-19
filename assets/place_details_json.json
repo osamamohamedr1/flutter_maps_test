@@ -1,76 +1,104 @@
 {
   "address_components": [
     {
-      "long_name": "1600",
-      "short_name": "1600",
-      "types": ["street_number"]
-    },
-    {
-      "long_name": "Amphitheatre Parkway",
-      "short_name": "Amphitheatre Pkwy",
+      "long_name": "Al Haram",
+      "short_name": "Al Haram",
       "types": ["route"]
     },
     {
-      "long_name": "Mountain View",
-      "short_name": "Mountain View",
+      "long_name": "Nazlet El-Semman",
+      "short_name": "Nazlet El-Semman",
+      "types": ["sublocality_level_1", "sublocality", "political"]
+    },
+    {
+      "long_name": "Al Haram",
+      "short_name": "Al Haram",
       "types": ["locality", "political"]
     },
     {
-      "long_name": "Santa Clara County",
-      "short_name": "Santa Clara County",
-      "types": ["administrative_area_level_2", "political"]
-    },
-    {
-      "long_name": "California",
-      "short_name": "CA",
+      "long_name": "Giza Governorate",
+      "short_name": "Giza Governorate",
       "types": ["administrative_area_level_1", "political"]
     },
     {
-      "long_name": "United States",
-      "short_name": "US",
+      "long_name": "Egypt",
+      "short_name": "EG",
       "types": ["country", "political"]
-    },
-    {
-      "long_name": "94043",
-      "short_name": "94043",
-      "types": ["postal_code"]
     }
   ],
-  "adr_address": "<span class=\"street-address\">1600 Amphitheatre Pkwy</span>, <span class=\"locality\">Mountain View</span>, <span class=\"region\">CA</span> <span class=\"postal-code\">94043</span>, <span class=\"country-name\">USA</span>",
-  "formatted_address": "1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
+  "adr_address": "<span class=\"street-address\">Al Haram</span>, <span class=\"locality\">Giza</span>, <span class=\"country-name\">Egypt</span>",
+  "formatted_address": "Al Haram, Nazlet El-Semman, Al Haram, Giza Governorate, Egypt",
+  "formatted_phone_number": "+20 2 33776893",
   "geometry": {
     "location": {
-      "lat": 37.4224764,
-      "lng": -122.0842499
+      "lat": 29.9792,
+      "lng": 31.1342
     },
-    "location_type": "ROOFTOP",
+    "location_type": "GEOMETRIC_CENTER",
     "viewport": {
       "northeast": {
-        "lat": 37.4238253802915,
-        "lng": -122.0829009197085
+        "lat": 29.9805509802915,
+        "lng": 31.1355489802915
       },
       "southwest": {
-        "lat": 37.4211274197085,
-        "lng": -122.0855988802915
+        "lat": 29.9778530197085,
+        "lng": 31.1328510197085
       }
     }
   },
-  "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/geocode-71.png",
-  "icon_background_color": "#7B9EB0",
-  "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/generic_pinlet",
-  "name": "Googleplex",
+  "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/landmark-71.png",
+  "icon_background_color": "#FF9E67",
+  "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/landmark_pinlet",
+  "name": "Great Pyramid of Giza",
+  "opening_hours": {
+    "open_now": true,
+    "weekday_text": [
+      "Monday: 8:00 AM – 5:00 PM",
+      "Tuesday: 8:00 AM – 5:00 PM",
+      "Wednesday: 8:00 AM – 5:00 PM",
+      "Thursday: 8:00 AM – 5:00 PM",
+      "Friday: 8:00 AM – 5:00 PM",
+      "Saturday: 8:00 AM – 5:00 PM",
+      "Sunday: 8:00 AM – 5:00 PM"
+    ]
+  },
   "photos": [
     {
-      "height": 3024,
-      "html_attributions": ["<a href=\"https://maps.google.com/maps/contrib/1234567890\">John Doe</a>"],
-      "photo_reference": "CmRaAAA...",
-      "width": 4032
+      "height": 4032,
+      "html_attributions": [
+        "<a href=\"https://maps.google.com/maps/contrib/102356789012345678901\">Ayman Elshafei</a>"
+      ],
+      "photo_reference": "ATtYBwJ_example_photo_ref_PYRAMIDS",
+      "width": 3024
     }
   ],
-  "place_id": "ChIJ2eUgeAK6j4ARbn5u_wAGqWA",
-  "reference": "ChIJ2eUgeAK6j4ARbn5u_wAGqWA",
-  "types": ["street_address"],
-  "url": "https://maps.google.com/?q=1600+Amphitheatre+Parkway,+Mountain+View,+CA+94043",
-  "utc_offset": -420,
-  "vicinity": "Mountain View"
+  "place_id": "ChIJdd6c5U5AWBQR2lON3I3oo5A",
+  "plus_code": {
+    "compound_code": "X6GV+53 Al Haram, Giza District, Egypt",
+    "global_code": "8G2HX6GV+53"
+  },
+  "rating": 4.7,
+  "reference": "ChIJdd6c5U5AWBQR2lON3I3oo5A",
+  "reviews": [
+    {
+      "author_name": "John Smith",
+      "author_url": "https://www.google.com/maps/contrib/112345678901234567890/reviews",
+      "language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/AFdZuc...",
+      "rating": 5,
+      "relative_time_description": "a week ago",
+      "text": "A must-visit place. Stunning view and historical greatness.",
+      "time": 1699712040
+    }
+  ],
+  "types": [
+    "tourist_attraction",
+    "point_of_interest",
+    "establishment"
+  ],
+  "url": "https://maps.google.com/?cid=10210293753793258318",
+  "user_ratings_total": 112345,
+  "vicinity": "Al Haram, Giza",
+  "website": "http://www.guardians.net/egypt/gp1.htm",
+  "utc_offset": 120
 }

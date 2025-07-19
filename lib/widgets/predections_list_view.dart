@@ -30,7 +30,7 @@ class PredictionsListView extends StatelessWidget {
             trailing: IconButton(
               onPressed: () async {
                 var placeDetails = await placesService.getPlaceDetails(
-                  placeId: places[index].placeId.toString(),
+                  placeId: places[index].description.toString(),
                 );
                 onplaceSelected(placeDetails);
               },
