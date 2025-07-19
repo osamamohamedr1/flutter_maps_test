@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,8 +25,9 @@ class _RouteTrackingViewState extends State<RouteTrackingView> {
   List<PlaceModel> places = [];
   String? sessionToken;
   late Uuid uuid;
-  late LatLng myLocation;
+
   late LatLng destination;
+  Timer? debounce;
 
   Set<Polyline> polylines = {};
   @override
@@ -39,15 +41,27 @@ class _RouteTrackingViewState extends State<RouteTrackingView> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    debounce?.cancel();
+    textEditingController.dispose();
+    super.dispose();
+  }
+
   void fetchPredictions() {
-    textEditingController.addListener(() async {
-      sessionToken ??= uuid.v4();
-      await googleMapService.getPredictions(
-        input: textEditingController.text,
-        sesstionToken: sessionToken!,
-        places: places,
-      );
-      setState(() {});
+    if (debounce?.isActive ?? false) {
+      debounce?.cancel();
+    }
+    debounce = Timer(Duration(milliseconds: 200), () {
+      textEditingController.addListener(() async {
+        sessionToken ??= uuid.v4();
+        await googleMapService.getPredictions(
+          input: textEditingController.text,
+          sesstionToken: sessionToken!,
+          places: places,
+        );
+        setState(() {});
+      });
     });
   }
 
@@ -97,11 +111,14 @@ class _RouteTrackingViewState extends State<RouteTrackingView> {
     );
   }
 
-  void updateMyLocation() async {
+  void updateMyLocation() {
     try {
-      myLocation = await googleMapService.updateMyLocation(
+      googleMapService.updateMyLocation(
         markers: markers,
         googleMapController: googleMapController,
+        onLocationUpdated: () {
+          setState(() {});
+        },
       );
     } on LocationPermissionException catch (e) {
       // TODO
@@ -114,10 +131,7 @@ class _RouteTrackingViewState extends State<RouteTrackingView> {
 
   Future<List<LatLng>> getRoutesData() async {
     // ignore: unused_local_variable
-    var result = await googleMapService.getRoutesData(
-      destination: destination,
-      myLocation: myLocation,
-    );
+    var result = await googleMapService.getRoutesData(destination: destination);
 
     // decode route take result
     return googleMapService.getDecodedRoute();

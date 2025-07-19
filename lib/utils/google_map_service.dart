@@ -20,6 +20,7 @@ class GoogleMapService {
   PlacesService placesService = PlacesService();
   LocationService locationService = LocationService();
   RoutesService routesService = RoutesService();
+  LatLng? myLocation;
 
   Future<void> getPredictions({
     required String input,
@@ -43,17 +44,35 @@ class GoogleMapService {
     return placesService.getPlaceDetails(placeId: placeId);
   }
 
-  Future<List<LatLng>> getRoutesData({
-    required LatLng myLocation,
-    required LatLng destination,
-  }) async {
+  void updateMyLocation({
+    required Function onLocationUpdated,
+    required Set<Marker> markers,
+    required GoogleMapController googleMapController,
+  }) {
+    locationService.getLiveLocation((locationData) {
+      myLocation = LatLng(locationData.latitude!, locationData.longitude!);
+      var cameraPosition = CameraPosition(target: myLocation!, zoom: 10);
+      var myMarker = Marker(
+        markerId: MarkerId('My location'),
+        position: myLocation!,
+      );
+      markers.add(myMarker);
+
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(cameraPosition),
+      );
+      onLocationUpdated();
+    });
+  }
+
+  Future<List<LatLng>> getRoutesData({required LatLng destination}) async {
     // ignore: unused_local_variable
     final routeBody = RouteBody(
       origin: Origin(
         location: LocationModel(
           latLng: LatLngModel(
-            latitude: myLocation.latitude,
-            longitude: myLocation.longitude,
+            latitude: myLocation!.latitude,
+            longitude: myLocation!.longitude,
           ),
         ),
       ),
@@ -73,26 +92,6 @@ class GoogleMapService {
     // var result = await routesService.fetchRoutes(routBody: routeBody.toJson());
     // print(result.routes);
     return getDecodedRoute();
-  }
-
-  Future<LatLng> updateMyLocation({
-    required Set<Marker> markers,
-    required GoogleMapController googleMapController,
-  }) async {
-    var locationData = await locationService.getLocation();
-
-    var myLocation = LatLng(locationData.latitude!, locationData.longitude!);
-    var cameraPosition = CameraPosition(target: myLocation, zoom: 10);
-    var myMarker = Marker(
-      markerId: MarkerId('My location'),
-      position: myLocation,
-    );
-    markers.add(myMarker);
-
-    googleMapController.animateCamera(
-      CameraUpdate.newCameraPosition(cameraPosition),
-    );
-    return myLocation;
   }
 
   //RoutesModel result get points in its constructor
